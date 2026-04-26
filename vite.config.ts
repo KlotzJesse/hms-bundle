@@ -1,2 +1,2 @@
 import{defineConfig}from'vite'
-export default defineConfig({build:{lib:{entry:'./src/bundle.ts',name:'HMS',fileName:'hms',formats:['es']},rollupOptions:{external:['react','react-dom']}}})
+export default defineConfig({build:{lib:{entry:'./src/bundle.ts',name:'HMS',fileName:'hms',formats:['es']},rollupOptions:{external:['react','react-dom','react/jsx-runtime'],output:{banner:'import React from "react";import ReactDOM from "react-dom";const require=(m)=>{if(m==="react")return React;if(m==="react-dom")return ReactDOM;throw new Error("Cannot require "+m)};',globals:{react:'React','react-dom':'ReactDOM'}}}}})
