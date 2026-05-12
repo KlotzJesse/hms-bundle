@@ -18,7 +18,7 @@ export default defineConfig({
     lib: {
       entry: './src/bundle.ts',
       name: 'HMS',
-      fileName: 'hms',
+      fileName: () => 'hms.mjs',
       formats: ['es']
     }
   }

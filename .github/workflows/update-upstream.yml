@@ -1,0 +1,53 @@
+name: Sync upstream roomkit-react
+
+on:
+  schedule:
+    - cron: '0 6 * * *'   # daily at 06:00 UTC
+  workflow_dispatch:       # allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  check-and-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Compare versions
+        id: check
+        run: |
+          CURRENT=$(node -e "console.log(require('./package.json').dependencies['@100mslive/roomkit-react'])")
+          LATEST=$(npm view @100mslive/roomkit-react version)
+          echo "current=$CURRENT"
+          echo "latest=$LATEST"
+          echo "current=$CURRENT" >> $GITHUB_OUTPUT
+          echo "latest=$LATEST"   >> $GITHUB_OUTPUT
+          [ "$CURRENT" != "$LATEST" ] && echo "needs_update=true" >> $GITHUB_OUTPUT || echo "needs_update=false" >> $GITHUB_OUTPUT
+
+      - name: Update, build and push
+        if: steps.check.outputs.needs_update == 'true'
+        run: |
+          npm install @100mslive/roomkit-react@${{ steps.check.outputs.latest }}
+          npm run build
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Update pinned version in package.json to exact
+          node -e "
+            const fs = require('fs');
+            const p = JSON.parse(fs.readFileSync('package.json','utf8'));
+            p.dependencies['@100mslive/roomkit-react'] = '${{ steps.check.outputs.latest }}';
+            fs.writeFileSync('package.json', JSON.stringify(p, null, 2) + '\n');
+          "
+          git add package.json package-lock.json
+          git commit -m "chore: bump roomkit-react ${{ steps.check.outputs.current }} → ${{ steps.check.outputs.latest }}"
+          git push
+        # Pushing to main triggers deploy-pages.yml automatically
+
+      - name: Already up to date
+        if: steps.check.outputs.needs_update != 'true'
+        run: echo "roomkit-react is already at ${{ steps.check.outputs.latest }} — nothing to do."
