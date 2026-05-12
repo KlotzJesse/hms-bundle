@@ -1,4 +1,66 @@
-import { t as e } from "./tsvb-M68aQlbf.mjs";
+(function() {
+	var e = null, t = null, n, r;
+	function i(e) {
+		return new Proxy(function() {}, {
+			get: function(t, n) {
+				if (n === "__hmsGetReal") return function() {
+					return e();
+				};
+				if (n === "prototype") {
+					var r = e();
+					return r ? r.prototype : void 0;
+				}
+				var r = e();
+				if (r == null) return i(function() {
+					var t = e();
+					return t == null ? null : t[n];
+				});
+				var a = r[n];
+				return typeof a == "function" || typeof a == "object" && a ? i(function() {
+					var t = e();
+					return t == null ? null : t[n];
+				}) : a;
+			},
+			set: function(t, n, r) {
+				var i = e();
+				return i && (i[n] = r), !0;
+			},
+			apply: function(t, n, r) {
+				var i = e();
+				if (!i) throw Error("[HMS] React not ready. Call setReact(React,ReactDOM) before rendering HMSPrebuilt.");
+				var a = Array.prototype.slice.call(r);
+				// Resolve lazy-proxy types (e.g. Fragment) to their real React values
+				// so React.createElement / jsx receive the actual Symbol/class.
+				if (a.length > 0 && a[0] != null && typeof a[0].__hmsGetReal == "function") {
+					var o = a[0].__hmsGetReal();
+					o != null && (a[0] = o);
+				}
+				return i.apply(n, a);
+			},
+			construct: function(t, n, r) {
+				var i = e();
+				if (!i) throw Error("[HMS] React not ready. Call setReact(React,ReactDOM) before rendering HMSPrebuilt.");
+				return Reflect.construct(i, n, r);
+			},
+			getPrototypeOf: function() {
+				var t = e();
+				return t ? Object.getPrototypeOf(t) : Function.prototype;
+			},
+			has: function(t, n) {
+				var r = e();
+				return !!r && n in r;
+			}
+		});
+	}
+	n = i(function() {
+		return e;
+	}), r = i(function() {
+		return t;
+	}), globalThis.React || (globalThis.React = n), globalThis.ReactDOM || (globalThis.ReactDOM = r), globalThis.__hmsSetReact = function(i, a) {
+		e = i, t = a, globalThis.React === n && (globalThis.React = i), globalThis.ReactDOM === r && (globalThis.ReactDOM = a);
+	};
+})();
+import { t as e } from "./tsvb-CMYbOpIz.mjs";
 //#region node_modules/@100mslive/hms-virtual-background/dist/esm/HMSEffectsPlugin.js
 var t = (e, t, n) => new Promise((r, i) => {
 	var a = (e) => {

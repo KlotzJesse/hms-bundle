@@ -1,4 +1,66 @@
-import "./tsvb-M68aQlbf.mjs";
+(function() {
+	var e = null, t = null, n, r;
+	function i(e) {
+		return new Proxy(function() {}, {
+			get: function(t, n) {
+				if (n === "__hmsGetReal") return function() {
+					return e();
+				};
+				if (n === "prototype") {
+					var r = e();
+					return r ? r.prototype : void 0;
+				}
+				var r = e();
+				if (r == null) return i(function() {
+					var t = e();
+					return t == null ? null : t[n];
+				});
+				var a = r[n];
+				return typeof a == "function" || typeof a == "object" && a ? i(function() {
+					var t = e();
+					return t == null ? null : t[n];
+				}) : a;
+			},
+			set: function(t, n, r) {
+				var i = e();
+				return i && (i[n] = r), !0;
+			},
+			apply: function(t, n, r) {
+				var i = e();
+				if (!i) throw Error("[HMS] React not ready. Call setReact(React,ReactDOM) before rendering HMSPrebuilt.");
+				var a = Array.prototype.slice.call(r);
+				// Resolve lazy-proxy types (e.g. Fragment) to their real React values
+				// so React.createElement / jsx receive the actual Symbol/class.
+				if (a.length > 0 && a[0] != null && typeof a[0].__hmsGetReal == "function") {
+					var o = a[0].__hmsGetReal();
+					o != null && (a[0] = o);
+				}
+				return i.apply(n, a);
+			},
+			construct: function(t, n, r) {
+				var i = e();
+				if (!i) throw Error("[HMS] React not ready. Call setReact(React,ReactDOM) before rendering HMSPrebuilt.");
+				return Reflect.construct(i, n, r);
+			},
+			getPrototypeOf: function() {
+				var t = e();
+				return t ? Object.getPrototypeOf(t) : Function.prototype;
+			},
+			has: function(t, n) {
+				var r = e();
+				return !!r && n in r;
+			}
+		});
+	}
+	n = i(function() {
+		return e;
+	}), r = i(function() {
+		return t;
+	}), globalThis.React || (globalThis.React = n), globalThis.ReactDOM || (globalThis.ReactDOM = r), globalThis.__hmsSetReact = function(i, a) {
+		e = i, t = a, globalThis.React === n && (globalThis.React = i), globalThis.ReactDOM === r && (globalThis.ReactDOM = a);
+	};
+})();
+import "./tsvb-CMYbOpIz.mjs";
 //#region \0rolldown/runtime.js
 var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescriptor, r = Object.getOwnPropertyNames, i = Object.getPrototypeOf, a = Object.prototype.hasOwnProperty, o = (e, t) => () => (e && (t = e(e = 0)), t), s = (e, t) => () => (t || (e((t = { exports: {} }).exports, t), e = null), t.exports), c = (e, n) => {
 	let r = {};
@@ -118149,7 +118211,7 @@ var z6 = new class {
 	constructor() {
 		this.initialisePlugin = (e, t) => I4(this, null, function* () {
 			if (!this.getVBObject()) if (e) try {
-				let n = yield import("./HMSEffectsPlugin-pCg7EvoT.mjs");
+				let n = yield import("./HMSEffectsPlugin-BVq-0N9Y.mjs");
 				this.effectsPlugin = new n.HMSEffectsPlugin(e, t);
 			} catch (e) {
 				console.error("Failed to initialise HMSEffectsPlugin:", e, "Using HMSVBPlugin"), this.hmsPlugin = new wNe(pD.NONE, pD.NONE);
@@ -135156,4 +135218,9 @@ Wpt.propTypes = {
 var $9 = "https://storage.googleapis.com/100ms-cms-prod/";
 `${$9}`, `${$9}`, `${$9}`, `${$9}`, `${$9}`, `${$9}`, `${$9}`, `${$9}`, `${$9}`, `${$9}`, `${$9}`, `${$9}`, `${$9}`, `${$9}`, `${$9}`, Y(), Dd.STARTING, Dd.INIT_FETCHED, Dd.SIGNAL_CONNECTED, Dd.ICE_ESTABLISHED, Dd.MEDIA_CAPTURED, Dd.MEDIA_PUBLISHED, Dd.COMPLETED, Y();
 //#endregion
-export { Rpt as HMSPrebuilt };
+//#region src/bundle.ts
+function Gpt(e, t) {
+	typeof globalThis.__hmsSetReact == "function" ? globalThis.__hmsSetReact(e, t) : (globalThis.React = e, globalThis.ReactDOM = t);
+}
+//#endregion
+export { Rpt as HMSPrebuilt, Gpt as setReact };
