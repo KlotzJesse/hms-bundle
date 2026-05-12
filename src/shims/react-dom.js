@@ -1,0 +1,12 @@
+const RD = globalThis.ReactDOM;
+export default RD;
+export const createPortal = RD.createPortal;
+export const createRoot = RD.createRoot;
+export const findDOMNode = RD.findDOMNode;
+export const flushSync = RD.flushSync;
+export const hydrate = RD.hydrate;
+export const hydrateRoot = RD.hydrateRoot;
+export const render = RD.render;
+export const unmountComponentAtNode = RD.unmountComponentAtNode;
+export const unstable_batchedUpdates = RD.unstable_batchedUpdates;
+export const version = RD.version;
