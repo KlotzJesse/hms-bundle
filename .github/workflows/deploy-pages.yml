@@ -29,13 +29,8 @@ jobs:
       - run: npm install
       - run: npm run build
 
-      - name: Smoke-test — hms.mjs exports loadHMS
-        run: node -e "
-          import('./dist/hms.mjs').then(m => {
-            if (typeof m.loadHMS !== 'function') throw new Error('loadHMS not found');
-            console.log('✓ loadHMS exported');
-          });
-        "
+      - name: Smoke-test hms.mjs
+        run: node --input-type=module -e "import('./dist/hms.mjs').then(m=>{if(typeof m.loadHMS!=='function')throw new Error('loadHMS not found');console.log('ok')})"
 
       - uses: actions/upload-pages-artifact@v3
         with:
