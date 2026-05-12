@@ -59,7 +59,12 @@ hmsR=lazy(function(){return _r;});
 hmsRD=lazy(function(){return _rd;});
 if(!globalThis.React)globalThis.React=hmsR;
 if(!globalThis.ReactDOM)globalThis.ReactDOM=hmsRD;
-globalThis.__hmsSetReact=function(React,ReactDOM){
+// Guard: only the FIRST chunk to evaluate installs __hmsSetReact.
+// All chunks share banner code (Rolldown applies output.banner to every chunk).
+// Deps evaluate before their importers, so the deepest dep wins.
+// Every chunk's lazy proxies close over that first chunk's _r/_rd refs —
+// so setReact() calling __hmsSetReact() fills the right closure.
+if(!globalThis.__hmsSetReact)globalThis.__hmsSetReact=function(React,ReactDOM){
   _r=React;_rd=ReactDOM;
   if(globalThis.React===hmsR)globalThis.React=React;
   if(globalThis.ReactDOM===hmsRD)globalThis.ReactDOM=ReactDOM;

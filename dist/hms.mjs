@@ -52,15 +52,20 @@
 			}
 		});
 	}
+	// Guard: only the FIRST chunk to evaluate installs __hmsSetReact.
+	// All chunks share banner code (Rolldown applies output.banner to every chunk).
+	// Deps evaluate before their importers, so the deepest dep wins.
+	// Every chunk's lazy proxies close over that first chunk's _r/_rd refs —
+	// so setReact() calling __hmsSetReact() fills the right closure.
 	n = i(function() {
 		return e;
 	}), r = i(function() {
 		return t;
-	}), globalThis.React || (globalThis.React = n), globalThis.ReactDOM || (globalThis.ReactDOM = r), globalThis.__hmsSetReact = function(i, a) {
+	}), globalThis.React || (globalThis.React = n), globalThis.ReactDOM || (globalThis.ReactDOM = r), globalThis.__hmsSetReact || (globalThis.__hmsSetReact = function(i, a) {
 		e = i, t = a, globalThis.React === n && (globalThis.React = i), globalThis.ReactDOM === r && (globalThis.ReactDOM = a);
-	};
+	});
 })();
-import "./tsvb-CMYbOpIz.mjs";
+import "./tsvb-C8s2YpEA.mjs";
 //#region \0rolldown/runtime.js
 var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescriptor, r = Object.getOwnPropertyNames, i = Object.getPrototypeOf, a = Object.prototype.hasOwnProperty, o = (e, t) => () => (e && (t = e(e = 0)), t), s = (e, t) => () => (t || (e((t = { exports: {} }).exports, t), e = null), t.exports), c = (e, n) => {
 	let r = {};
@@ -118211,7 +118216,7 @@ var z6 = new class {
 	constructor() {
 		this.initialisePlugin = (e, t) => I4(this, null, function* () {
 			if (!this.getVBObject()) if (e) try {
-				let n = yield import("./HMSEffectsPlugin-BVq-0N9Y.mjs");
+				let n = yield import("./HMSEffectsPlugin-BgYP9IC9.mjs");
 				this.effectsPlugin = new n.HMSEffectsPlugin(e, t);
 			} catch (e) {
 				console.error("Failed to initialise HMSEffectsPlugin:", e, "Using HMSVBPlugin"), this.hmsPlugin = new wNe(pD.NONE, pD.NONE);

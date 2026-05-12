@@ -52,15 +52,20 @@
 			}
 		});
 	}
+	// Guard: only the FIRST chunk to evaluate installs __hmsSetReact.
+	// All chunks share banner code (Rolldown applies output.banner to every chunk).
+	// Deps evaluate before their importers, so the deepest dep wins.
+	// Every chunk's lazy proxies close over that first chunk's _r/_rd refs —
+	// so setReact() calling __hmsSetReact() fills the right closure.
 	n = i(function() {
 		return e;
 	}), r = i(function() {
 		return t;
-	}), globalThis.React || (globalThis.React = n), globalThis.ReactDOM || (globalThis.ReactDOM = r), globalThis.__hmsSetReact = function(i, a) {
+	}), globalThis.React || (globalThis.React = n), globalThis.ReactDOM || (globalThis.ReactDOM = r), globalThis.__hmsSetReact || (globalThis.__hmsSetReact = function(i, a) {
 		e = i, t = a, globalThis.React === n && (globalThis.React = i), globalThis.ReactDOM === r && (globalThis.ReactDOM = a);
-	};
+	});
 })();
-import { t as e } from "./tsvb-CMYbOpIz.mjs";
+import { t as e } from "./tsvb-C8s2YpEA.mjs";
 //#region node_modules/@100mslive/hms-virtual-background/dist/esm/HMSEffectsPlugin.js
 var t = (e, t, n) => new Promise((r, i) => {
 	var a = (e) => {
