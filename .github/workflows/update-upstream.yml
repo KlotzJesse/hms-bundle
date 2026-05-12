@@ -36,7 +36,7 @@ jobs:
           npm run build
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # Update pinned version in package.json to exact
+          # Pin exact version in package.json
           node -e "
             const fs = require('fs');
             const p = JSON.parse(fs.readFileSync('package.json','utf8'));
@@ -44,7 +44,7 @@ jobs:
             fs.writeFileSync('package.json', JSON.stringify(p, null, 2) + '\n');
           "
           git add package.json package-lock.json
-          git commit -m "chore: bump roomkit-react ${{ steps.check.outputs.current }} → ${{ steps.check.outputs.latest }}"
+          git commit -m "chore: bump roomkit-react ${{ steps.check.outputs.current }} -> ${{ steps.check.outputs.latest }}"
           git push
         # Pushing to main triggers deploy-pages.yml automatically
 
